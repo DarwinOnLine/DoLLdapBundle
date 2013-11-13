@@ -1,0 +1,17 @@
+parameters:
+  dol_ldap.security.user.provider.class: DoL\LdapBundle\Security\User\LdapUserProvider
+  dol_ldap.security.authentication.provider.class: DoL\LdapBundle\Security\Authentication\LdapAuthenticationProvider
+
+services:
+  # Ldap user provider
+  dol_ldap.security.user.provider:
+    class: "%dol_ldap.security.user.provider.class%"
+    arguments: [ "@dol_ldap.ldap_manager", "@logger" ]
+    tags:
+      - { name: monolog.logger, channel: security }
+
+  # Ldap authentication provider
+  dol_ldap.security.authentication.provider:
+    class: "%dol_ldap.security.authentication.provider.class%"
+    # Args 1 and 2 defined by LdapFactory::createListener()
+    arguments: [ "@security.user_checker", "", "", "@dol_ldap.ldap_manager", "%security.authentication.hide_user_not_found%" ]

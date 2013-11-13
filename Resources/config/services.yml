@@ -1,0 +1,8 @@
+parameters:
+  dol_ldap.ldap_manager.class: DoL\LdapBundle\Ldap\LdapManager
+
+services:
+  # Ldap manager
+  dol_ldap.ldap_manager.default:
+    class: '%dol_ldap.ldap_manager.class%'
+    arguments: [ '@dol_ldap.ldap_driver', '@dol_ldap.user_manager', '%dol_ldap.domains.parameters%' ]

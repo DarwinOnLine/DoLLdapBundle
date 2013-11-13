@@ -1,0 +1,10 @@
+parameters:
+  dol_ldap.validator.unique.class: DoL\LdapBundle\Validator\UniqueValidator
+
+services:
+  # Unique validator service
+  dol_ldap.validator.unique:
+    class: '%dol_ldap.validator.unique.class%'
+    arguments: [ '@dol_ldap.ldap_manager' ]
+    tags:
+      - { name: validator.constraint_validator, alias:"dol_ldap.validator.unique" }
