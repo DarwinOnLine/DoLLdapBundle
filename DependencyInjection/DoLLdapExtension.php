@@ -35,6 +35,16 @@ class DoLLdapExtension extends Extension
         $container->setAlias('dol_ldap.ldap_manager', $config['service']['ldap_manager']);
         $container->setAlias('dol_ldap.ldap_driver', $config['service']['ldap_driver']);
 
+        foreach ($config['domains'] as &$domain)
+        {
+            if (!isset($domain['driver']['baseDn'])) {
+                $domain['driver']['baseDn'] = $domain['user']['baseDn'];
+            }
+            if (!isset($domain['driver']['accountFilterFormat'])) {
+                $domain['driver']['accountFilterFormat'] = $domain['user']['filter'];
+            }
+        }
+        
         $container->setParameter('dol_ldap.domains.parameters', $config['domains']);
     }
     

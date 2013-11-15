@@ -21,11 +21,15 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
     public function testLoadMinimalConfiguration()
     {
         $minRequiredConfig = array(
-            'driver' => array(
-                'host' => 'ldap.hostname.local',
-            ),
-            'user' => array(
-                'baseDn' => 'ou=Persons,dc=example,dc=com',
+            'domains' => array(
+                'server1' => array(
+                    'driver' => array(
+                        'host' => 'ldap.hostname.local',
+                    ),
+                    'user' => array(
+                        'baseDn' => 'ou=Persons,dc=example,dc=com',
+                    ),
+                ),
             ),
         );
 
@@ -38,9 +42,8 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
 
         $this->assertHasDefinition('dol_ldap.ldap_driver');
         $this->assertHasDefinition('dol_ldap.ldap_manager.default');
-
-        $this->assertParameter($defaultConfig['driver'], 'dol_ldap.ldap_driver.parameters');
-        $this->assertParameter($defaultConfig['user'], 'dol_ldap.ldap_manager.parameters');
+        
+        $this->assertParameter($defaultConfig['domains'], 'dol_ldap.domains.parameters');
 
         $this->assertAlias('fos_user.user_manager', 'dol_ldap.user_manager');
         $this->assertAlias('dol_ldap.ldap_manager.default', 'dol_ldap.ldap_manager');
@@ -49,60 +52,58 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
 
     public function testLoadFullConfiguration()
     {
-        $config                           = $this->getDefaultConfig();
-        $config['driver']['username']     = null;
-        $config['driver']['password']     = null;
-        $config['driver']['optReferrals'] = false;
+        $config                                                 = $this->getDefaultConfig();
+        $config['domains']['server1']['driver']['username']     = null;
+        $config['domains']['server1']['driver']['password']     = null;
+        $config['domains']['server1']['driver']['optReferrals'] = false;
 
         $this->container = new ContainerBuilder();
         $extension = new DoLLdapExtension();
 
         $extension->load(array($config), $this->container);
 
-        $this->assertEquals($config['driver'], $this->container->getParameter('dol_ldap.ldap_driver.parameters'));
-        $this->assertEquals($config['user'], $this->container->getParameter('dol_ldap.ldap_manager.parameters'));
+        $this->assertParameter($config['domains'], 'dol_ldap.domains.parameters');
     }
 
     public function testLoadDriverConfiguration()
     {
-        $config                                  = $this->getDefaultConfig();
-        $config['driver']['accountFilterFormat'] = '(%(uid=%s))';
+        $config                                                         = $this->getDefaultConfig();
+        $config['domains']['server1']['driver']['accountFilterFormat']  = '(%(uid=%s))';
 
         $this->container = new ContainerBuilder();
         $extension = new DoLLdapExtension();
 
         $extension->load(array($config), $this->container);
 
-        $this->assertEquals($config['driver'], $this->container->getParameter('dol_ldap.ldap_driver.parameters'));
-        $this->assertEquals($config['user'], $this->container->getParameter('dol_ldap.ldap_manager.parameters'));
+        $this->assertParameter($config['domains'], 'dol_ldap.domains.parameters');
     }
 
     public function testSslConfiguration()
     {
-        $config                          = $this->getDefaultConfig();
-        $config['driver']['useSsl']      = true;
-        $config['driver']['useStartTls'] = false;
+        $config                                                 = $this->getDefaultConfig();
+        $config['domains']['server1']['driver']['useSsl']       = true;
+        $config['domains']['server1']['driver']['useStartTls']  = false;
 
         $this->container = new ContainerBuilder();
         $extension = new DoLLdapExtension();
 
         $extension->load(array($config), $this->container);
 
-        $this->assertEquals($config['driver'], $this->container->getParameter('dol_ldap.ldap_driver.parameters'));
+        $this->assertParameter($config['domains'], 'dol_ldap.domains.parameters');
     }
 
     public function testTlsConfiguration()
     {
-        $config                          = $this->getDefaultConfig();
-        $config['driver']['useSsl']      = false;
-        $config['driver']['useStartTls'] = true;
+        $config                                                 = $this->getDefaultConfig();
+        $config['domains']['server1']['driver']['useSsl']       = false;
+        $config['domains']['server1']['driver']['useStartTls']  = true;
 
         $this->container = new ContainerBuilder();
         $extension = new DoLLdapExtension();
 
         $extension->load(array($config), $this->container);
 
-        $this->assertEquals($config['driver'], $this->container->getParameter('dol_ldap.ldap_driver.parameters'));
+        $this->assertParameter($config['domains'], 'dol_ldap.domains.parameters');
     }
 
     /**
@@ -110,9 +111,9 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
      */
     public function testSslTlsExclusiveConfiguration()
     {
-        $config                          = $this->getDefaultConfig();
-        $config['driver']['useSsl']      = true;
-        $config['driver']['useStartTls'] = true;
+        $config                                                 = $this->getDefaultConfig();
+        $config['domains']['server1']['driver']['useSsl']       = true;
+        $config['domains']['server1']['driver']['useStartTls']  = true;
 
         $this->container = new ContainerBuilder();
         $extension = new DoLLdapExtension();
@@ -123,22 +124,26 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
     private function getDefaultConfig()
     {
         return array(
-            'driver' => array(
-                'host'                => 'ldap.hostname.local',
-                'port'                => 389,
-                'useSsl'              => false,
-                'useStartTls'         => false,
-                'baseDn'              => 'ou=Persons,dc=example,dc=com',
-                'accountFilterFormat' => '',
-                'bindRequiresDn'      => false,
-            ),
-            'user'                => array(
-                'baseDn'     => 'ou=Persons,dc=example,dc=com',
-                'filter'     => '',
-                'attributes' => array(
-                    array(
-                        'ldap_attr'   => 'uid',
-                        'user_method' => 'setUsername',
+            'domains' => array(
+                'server1' => array(
+                    'driver' => array(
+                        'host'                => 'ldap.hostname.local',
+                        'port'                => 389,
+                        'useSsl'              => false,
+                        'useStartTls'         => false,
+                        'baseDn'              => 'ou=Persons,dc=example,dc=com',
+                        'accountFilterFormat' => '',
+                        'bindRequiresDn'      => false,
+                    ),
+                    'user'                => array(
+                        'baseDn'     => 'ou=Persons,dc=example,dc=com',
+                        'filter'     => '',
+                        'attributes' => array(
+                            array(
+                                'ldap_attr'   => 'uid',
+                                'user_method' => 'setUsername',
+                            ),
+                        ),
                     ),
                 ),
             ),

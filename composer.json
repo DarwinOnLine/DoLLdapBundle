@@ -1,7 +1,7 @@
 {
     "name": "dol/ldap-bundle",
     "type": "symfony-bundle",
-    "description": "This package provide users and authentication services based on LDAP directories for Symfony2 framework",
+    "description": "This bundle improves FR3DLdapBundle by adding the ability to connect to multiple LDAP domains.",
     "keywords": ["ldap", "authentication", "multi-domains"],
     "license": "MIT",
     "homepage": "https://github.com/DarwinOnLine/DoLLdapBundle",
