@@ -22,7 +22,7 @@ Add this bundle to your `vendor/` dir:
 ```json
 {
     "require": {
-        "dol/ldap-bundle": "dev-master"
+        "dol/ldap-bundle": "1.0"
     }
 }
 ```

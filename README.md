@@ -7,6 +7,7 @@ This bundle improves `FR3DLdapBundle` by adding the ability to connect to multip
 **Versions and compatibilities:**
 
 - [![Build Status](https://secure.travis-ci.org/DarwinOnLine/DoLLdapBundle.png?branch=master)](http://travis-ci.org/DarwinOnLine/DoLLdapBundle) `Master`.
+- [![Build Status](https://secure.travis-ci.org/DarwinOnLine/DoLLdapBundle.png?branch=v1.0)](http://travis-ci.org/DarwinOnLine/DoLLdapBundle) `V 1.0`.
 
 Documentation
 -------------
