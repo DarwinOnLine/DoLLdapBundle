@@ -1,6 +1,8 @@
 DoLLdapBundle
 =============
 
+[![Latest Stable Version](https://poser.pugx.org/dol/ldap-bundle/v/stable.png)](https://packagist.org/packages/dol/ldap-bundle) [![Total Downloads](https://poser.pugx.org/dol/ldap-bundle/downloads.png)](https://packagist.org/packages/dol/ldap-bundle) [![License](https://poser.pugx.org/dol/ldap-bundle/license.png)](https://packagist.org/packages/dol/ldap-bundle)
+
 This bundle improves `FR3DLdapBundle` by adding the ability to connect to multiple LDAP domains
 
 
