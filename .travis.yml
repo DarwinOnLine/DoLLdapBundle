@@ -1,19 +1,45 @@
+sudo: false
+
 language: php
 
 php:
-  - 5.3.3
   - 5.3
   - 5.4
   - 5.5
+  - 5.6
+  - 7.0
+  - hhvm
+
+matrix:
+  allow_failures:
+    - php: hhvm
+    - env: SYMFONY_VERSION=3.0.*@dev
+  exclude:
+    - env: SYMFONY_VERSION=2.1.*
+      php: 7.0
+    - env: SYMFONY_VERSION=2.2.*
+      php: 7.0
+    - env: SYMFONY_VERSION=3.0.*@dev
+      php: 5.3
+    - env: SYMFONY_VERSION=3.0.*@dev
+      php: 5.4
 
 env:
-  - SYMFONY_VERSION=2.1
-  - SYMFONY_VERSION=2.2
-  - SYMFONY_VERSION=2.3
+  - SYMFONY_VERSION=2.1.*
+  - SYMFONY_VERSION=2.2.*
+  - SYMFONY_VERSION=2.3.*
+  - SYMFONY_VERSION=2.4.*
+  - SYMFONY_VERSION=2.5.*
+  - SYMFONY_VERSION=2.6.*
+  - SYMFONY_VERSION=2.7.*
+  - SYMFONY_VERSION=2.8.*
+  - SYMFONY_VERSION=3.0.*@dev
+
+before_install:
+  - echo "extension=ldap.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
 
 before_script:
-   - bash .travis.sh
-   - wget http://getcomposer.org/composer.phar
-   - php composer.phar install --prefer-source
+  - composer require --dev symfony/symfony:${SYMFONY_VERSION}
 
-script: phpunit --configuration phpunit.travis.xml
+script:
+  - phpunit
