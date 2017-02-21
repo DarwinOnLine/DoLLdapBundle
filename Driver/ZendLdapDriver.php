@@ -5,7 +5,7 @@ namespace DoL\LdapBundle\Driver;
 use Zend\Ldap\Ldap;
 use Zend\Ldap\Exception\LdapException as ZendLdapException;
 use DoL\LdapBundle\Model\LdapUserInterface;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
