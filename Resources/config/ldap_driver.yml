@@ -1,5 +1,5 @@
 parameters:
-  dol_ldap.domains.parameters:
+  dol_ldap.domains.parameters: []
   zend.ldap_driver.class: Zend\Ldap\Ldap
   dol_ldap.ldap_driver.multiple.class: DoL\LdapBundle\Driver\MultipleLdapDriver
   dol_ldap.ldap_driver.zend.class: DoL\LdapBundle\Driver\ZendLdapDriver
