@@ -78,7 +78,7 @@ class LdapUserProvider implements UserProviderInterface
      * Log a message into the logger if this exists.
      *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     private function logInfo($message, array $context = [])
     {

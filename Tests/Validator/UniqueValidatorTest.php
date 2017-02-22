@@ -17,8 +17,8 @@ use DoL\LdapBundle\Validator\UniqueValidator;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 /**
- * @covers DoL\LdapBundle\Validator\Unique
- * @covers DoL\LdapBundle\Validator\UniqueValidator
+ * @covers \DoL\LdapBundle\Validator\Unique
+ * @covers \DoL\LdapBundle\Validator\UniqueValidator
  */
 class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -82,7 +82,7 @@ class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testBadType()
     {
-        /** @noinspection PhpParamsInspection */
+        /* @noinspection PhpParamsInspection */
         $this->validator->validate('bad_type', $this->constraint);
     }
 
@@ -91,7 +91,7 @@ class UniqueValidatorTest extends \PHPUnit_Framework_TestCase
      */
     public function testWrongConstraint()
     {
-        /** @noinspection PhpParamsInspection */
+        /* @noinspection PhpParamsInspection */
         $this->validator->validate($this->user, $this->getMock('Symfony\Component\Validator\Constraint'));
     }
 }

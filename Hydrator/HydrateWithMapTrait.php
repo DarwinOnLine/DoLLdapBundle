@@ -9,16 +9,17 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 trait HydrateWithMapTrait
 {
     /**
      * Fill the given user with the following the attribute-method map.
      *
-     * @param UserInterface $user Target user.
-     * @param array[] $ldapUserAttributes Raw LDAP data.
-     * @param string[] $attributeMap Attribute-method map.
+     * @param UserInterface $user               target user
+     * @param array[]       $ldapUserAttributes raw LDAP data
+     * @param string[]      $attributeMap       attribute-method map
      */
     protected function hydrateUserWithAttributesMap(
         UserInterface $user,

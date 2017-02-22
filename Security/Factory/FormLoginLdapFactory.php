@@ -13,7 +13,8 @@ use Symfony\Component\DependencyInjection\Reference;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 class FormLoginLdapFactory implements SecurityFactoryInterface
 {
@@ -46,7 +47,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
     protected function createAuthProvider(ContainerBuilder $container, $id, $userProviderId)
     {
         $provider = 'dol_ldap.security.authentication.provider';
-        $providerId = $provider . '.' . $id;
+        $providerId = $provider.'.'.$id;
 
         $container
             ->setDefinition($providerId, new DefinitionDecorator($provider))
@@ -65,7 +66,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
         $listener->replaceArgument(4, $id);
         $listener->replaceArgument(5, $config);
 
-        $listenerId .= '.' . $id;
+        $listenerId .= '.'.$id;
         $container
             ->setDefinition($listenerId, $listener)
         ;

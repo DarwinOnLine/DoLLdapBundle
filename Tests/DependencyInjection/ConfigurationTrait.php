@@ -7,7 +7,8 @@ namespace DoL\LdapBundle\Tests\DependencyInjection;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 trait ConfigurationTrait
 {
@@ -23,9 +24,9 @@ trait ConfigurationTrait
                 'server1' => [
                     'driver' => $this->getDefaultDriverConfig(),
                     'user' => $this->getDefaultUserConfig(),
-                    'service' => $this->getDefaultServiceConfig(),
-                ]
-            ]
+                ],
+            ],
+            'service' => $this->getDefaultServiceConfig(),
         ];
     }
 

@@ -18,11 +18,12 @@ use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 /**
- * UniqueValidator
+ * UniqueValidator.
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 class UniqueValidator extends ConstraintValidator
 {
@@ -53,7 +54,7 @@ class UniqueValidator extends ConstraintValidator
     public function validate($value, Constraint $constraint)
     {
         if (!$constraint instanceof Unique) {
-            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Unique');
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\Unique');
         }
 
         if (!$value instanceof UserInterface) {

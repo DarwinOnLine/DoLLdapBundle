@@ -9,46 +9,49 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * Ldap drivers must implement this interface.
  *
  * @see http://www.php.net/ref.ldap.php
+ *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 interface LdapDriverInterface
 {
     /**
-     * Initialize the driver (new options)
-     * 
-     * @param array $options          New options to connect.
+     * Initialize the driver (new options).
+     *
+     * @param array $options new options to connect
      */
     public function init(array $options);
-    
-    /**
-     * Bind to LDAP directory
-     *
-     * @param UserInterface $user     The user for authenticating the bind.
-     * @param string        $password The password for authenticating the bind.
-     *
-     * @return boolean true on success or false on failure
-     *
-     * @throws LdapDriverException if some error occurs.
-     */
-    function bind(UserInterface $user, $password);
 
     /**
-     * Search LDAP tree
+     * Bind to LDAP directory.
      *
-     * @param  string        $baseDn     The base DN for the directory.
-     * @param  string        $filter     The search filter.
-     * @param  array         $attributes The array of the required attributes,
-     *                                   'dn' is always returned. If array is
-     *                                   empty then will return all attributes
-     *                                   and their associated values.
-     * @return array|boolean Returns a complete result information in a
-     *                       multi-dimensional array on success and FALSE on error.
-     *                       see {@link http://www.php.net/function.ldap-get-entries.php}
-     *                       for array format examples.
+     * @param UserInterface $user     the user for authenticating the bind
+     * @param string        $password the password for authenticating the bind
      *
-     * @throws LdapDriverException if some error occurs.
+     * @return bool true on success or false on failure
+     *
+     * @throws LdapDriverException if some error occurs
      */
-    function search($baseDn, $filter, array $attributes = array());
+    public function bind(UserInterface $user, $password);
+
+    /**
+     * Search LDAP tree.
+     *
+     * @param string $baseDn     the base DN for the directory
+     * @param string $filter     the search filter
+     * @param array  $attributes The array of the required attributes,
+     *                           'dn' is always returned. If array is
+     *                           empty then will return all attributes
+     *                           and their associated values.
+     *
+     * @return array|bool Returns a complete result information in a
+     *                    multi-dimensional array on success and FALSE on error.
+     *                    see {@link http://www.php.net/function.ldap-get-entries.php}
+     *                    for array format examples.
+     *
+     * @throws LdapDriverException if some error occurs
+     */
+    public function search($baseDn, $filter, array $attributes = array());
 }

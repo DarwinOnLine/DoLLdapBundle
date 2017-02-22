@@ -8,18 +8,19 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
 /**
- * This is the class that loads and manages your bundle configuration
+ * This is the class that loads and manages your bundle configuration.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 class DoLLdapExtension extends Extension
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function load(array $configs, ContainerBuilder $container)
     {
@@ -35,8 +36,7 @@ class DoLLdapExtension extends Extension
         $container->setAlias('dol_ldap.ldap_manager', $config['service']['ldap_manager']);
         $container->setAlias('dol_ldap.ldap_driver', $config['service']['ldap_driver']);
 
-        foreach ($config['domains'] as &$domain)
-        {
+        foreach ($config['domains'] as &$domain) {
             if (!isset($domain['driver']['baseDn'])) {
                 $domain['driver']['baseDn'] = $domain['user']['baseDn'];
             }
@@ -44,10 +44,10 @@ class DoLLdapExtension extends Extension
                 $domain['driver']['accountFilterFormat'] = $domain['user']['filter'];
             }
         }
-        
+
         $container->setParameter('dol_ldap.domains.parameters', $config['domains']);
     }
-    
+
     public function getNamespace()
     {
         return 'dol_ldap';

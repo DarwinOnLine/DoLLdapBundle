@@ -17,7 +17,8 @@ use Symfony\Component\Security\Core\User\UserProviderInterface;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 class LdapAuthenticationProvider extends UserAuthenticationProvider
 {

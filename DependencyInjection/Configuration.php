@@ -7,23 +7,24 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 /**
- * This is the class that validates and merges configuration from your app/config files
+ * This is the class that validates and merges configuration from your app/config files.
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html#cookbook-bundles-extension-config-class}
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 class Configuration implements ConfigurationInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode    = $treeBuilder->root('dol_ldap');
+        $rootNode = $treeBuilder->root('dol_ldap');
 
         $rootNode
             ->children()
@@ -51,7 +52,7 @@ class Configuration implements ConfigurationInterface
                                     ->scalarNode('networkTimeout')->end()
                                 ->end()
                                 ->validate()
-                                    ->ifTrue(function($v) {
+                                    ->ifTrue(function ($v) {
                                         return $v['useSsl'] && $v['useStartTls'];
                                     })
                                     ->thenInvalid('The useSsl and useStartTls options are mutually exclusive.')
@@ -65,8 +66,8 @@ class Configuration implements ConfigurationInterface
                                     ->arrayNode('attributes')
                                         ->defaultValue(array(
                                             array(
-                                                'ldap_attr'   => 'uid',
-                                                'user_method' => 'setUsername')
+                                                'ldap_attr' => 'uid',
+                                                'user_method' => 'setUsername', ),
                                             ))
                                         ->prototype('array')
                                             ->children()

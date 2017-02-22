@@ -61,8 +61,8 @@ class ZendLdapDriverTest extends \PHPUnit_Framework_TestCase
      * @dataProvider validUserPasswordProvider
      *
      * @param UserInterface $user
-     * @param string $password
-     * @param string $expectedBindRdn
+     * @param string        $password
+     * @param string        $expectedBindRdn
      */
     public function testBindSuccessful(UserInterface $user, $password, $expectedBindRdn)
     {
@@ -78,7 +78,7 @@ class ZendLdapDriverTest extends \PHPUnit_Framework_TestCase
      * @dataProvider invalidUserPasswordProvider
      *
      * @param UserInterface $user
-     * @param string $password
+     * @param string        $password
      */
     public function testFailBindByDn(UserInterface $user, $password)
     {

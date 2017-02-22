@@ -9,7 +9,8 @@ use DoL\LdapBundle\Model\LdapUserInterface;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 abstract class AbstractHydrator implements HydratorInterface
 {
@@ -23,7 +24,8 @@ abstract class AbstractHydrator implements HydratorInterface
     /**
      * {@inheritdoc}
      */
-    public function setAttributeMap(array $attributeMap) {
+    public function setAttributeMap(array $attributeMap)
+    {
         $this->attributeMap = $attributeMap['attributes'];
     }
 

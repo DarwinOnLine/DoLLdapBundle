@@ -7,7 +7,7 @@ use DoL\LdapBundle\Ldap\LdapManager;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @covers DoL\LdapBundle\Ldap\LdapManager
+ * @covers \DoL\LdapBundle\Ldap\LdapManager
  */
 class LdapManagerTest extends \PHPUnit_Framework_TestCase
 {
@@ -41,11 +41,11 @@ class LdapManagerTest extends \PHPUnit_Framework_TestCase
                     // SOME ATTRIBUTES
                 ],
                 'user' => [
-                    'baseDn'     => 'ou=Groups,dc=example,dc=com',
-                    'filter'     => '(attr0=value0)',
+                    'baseDn' => 'ou=Groups,dc=example,dc=com',
+                    'filter' => '(attr0=value0)',
                     'attributes' => [
                         [
-                            'ldap_attr'   => 'uid',
+                            'ldap_attr' => 'uid',
                             'user_method' => 'setUsername',
                         ],
                     ],
@@ -61,7 +61,7 @@ class LdapManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DoL\LdapBundle\Ldap\LdapManager::findUserByUsername
+     * @covers \DoL\LdapBundle\Ldap\LdapManager::findUserByUsername
      */
     public function testFindUserByUsername()
     {
@@ -84,7 +84,7 @@ class LdapManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DoL\LdapBundle\Ldap\LdapManager::findUserBy
+     * @covers \DoL\LdapBundle\Ldap\LdapManager::findUserBy
      */
     public function testFindUserBy()
     {
@@ -108,13 +108,16 @@ class LdapManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DoL\LdapBundle\Ldap\LdapManager::buildFilter
+     * @covers \DoL\LdapBundle\Ldap\LdapManager::buildFilter
      */
     public function testBuildFilter()
     {
         $reflectionClass = new \ReflectionClass('DoL\LdapBundle\Ldap\LdapManager');
-        $method          = $reflectionClass->getMethod('buildFilter');
+        $method = $reflectionClass->getMethod('buildFilter');
         $method->setAccessible(true);
+        $params = $reflectionClass->getProperty('params');
+        $params->setAccessible(true);
+        $params->setValue($this->ldapManager, $this->paramSets['server1']['user']);
 
         $criteria = array(
             'attr1' => 'value1',
@@ -126,7 +129,7 @@ class LdapManagerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @covers DoL\LdapBundle\Ldap\LdapManager::bind
+     * @covers \DoL\LdapBundle\Ldap\LdapManager::bind
      */
     public function testBind()
     {

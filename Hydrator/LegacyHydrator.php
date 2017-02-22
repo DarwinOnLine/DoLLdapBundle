@@ -10,7 +10,8 @@ use Symfony\Component\Security\Core\User\AdvancedUserInterface;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 final class LegacyHydrator extends AbstractHydrator
 {

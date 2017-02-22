@@ -21,7 +21,8 @@ use Symfony\Component\Validator\Constraint;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 class Unique extends Constraint
 {

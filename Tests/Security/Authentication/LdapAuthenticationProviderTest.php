@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @covers DoL\LdapBundle\Security\Authentication\LdapAuthenticationProvider
+ * @covers \DoL\LdapBundle\Security\Authentication\LdapAuthenticationProvider
  */
 class LdapAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
 {
@@ -210,9 +210,7 @@ class LdapAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param TokenInterface $authenticatedToken
-     * @param UserInterface $expectedUser
-     *
-     * @return void
+     * @param UserInterface  $expectedUser
      */
     private function assertValidAuthenticatedToken($authenticatedToken, UserInterface $expectedUser)
     {
@@ -227,7 +225,7 @@ class LdapAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param UserInterface|string|object $user
-     * @param string $credentials
+     * @param string                      $credentials
      *
      * @return UsernamePasswordToken
      */
@@ -238,8 +236,8 @@ class LdapAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param UserInterface $user
-     * @param string $password
-     * @param bool $result
+     * @param string        $password
+     * @param bool          $result
      */
     private function willBind(UserInterface $user, $password, $result = true)
     {
@@ -251,10 +249,8 @@ class LdapAuthenticationProviderTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @param string $username
+     * @param string                  $username
      * @param UserInterface|Exception $userOrException
-     *
-     * @return void
      */
     private function willRetrieveUser($username, $userOrException)
     {

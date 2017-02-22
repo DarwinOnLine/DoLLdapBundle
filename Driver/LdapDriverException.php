@@ -7,7 +7,8 @@ namespace DoL\LdapBundle\Driver;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 class LdapDriverException extends \Exception
 {

@@ -54,8 +54,8 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
     public function testLoadFullConfiguration()
     {
         $config = $this->getDefaultConfig();
-        $config['domains']['server1']['driver']['username']     = null;
-        $config['domains']['server1']['driver']['password']     = null;
+        $config['domains']['server1']['driver']['username'] = null;
+        $config['domains']['server1']['driver']['password'] = null;
         $config['domains']['server1']['driver']['optReferrals'] = false;
 
         $this->container = new ContainerBuilder();
@@ -76,8 +76,9 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
 
         $extension->load([$config], $this->container);
 
-        self::assertEquals($config['domains']['server1']['driver'], $this->container->getParameter('dol_ldap.ldap_driver.parameters'));
-        self::assertEquals($config['domains']['server1']['user'], $this->container->getParameter('dol_ldap.ldap_manager.parameters'));
+        $loadedConfig = $this->container->getParameter('dol_ldap.domains.parameters');
+        self::assertEquals($config['domains']['server1']['driver'], $loadedConfig['server1']['driver']);
+        self::assertEquals($config['domains']['server1']['user'], $loadedConfig['server1']['user']);
     }
 
     public function testSslConfiguration()
@@ -91,7 +92,8 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
 
         $extension->load([$config], $this->container);
 
-        self::assertEquals($config['domains']['server1']['driver'], $this->container->getParameter('dol_ldap.ldap_driver.parameters'));
+        $loadedConfig = $this->container->getParameter('dol_ldap.domains.parameters');
+        self::assertEquals($config['domains']['server1']['driver'], $loadedConfig['server1']['driver']);
     }
 
     public function testTlsConfiguration()
@@ -105,7 +107,8 @@ class DoLLdapExtensionTest extends \PHPUnit_Framework_TestCase
 
         $extension->load([$config], $this->container);
 
-        self::assertEquals($config['domains']['server1']['driver'], $this->container->getParameter('dol_ldap.ldap_driver.parameters'));
+        $loadedConfig = $this->container->getParameter('dol_ldap.domains.parameters');
+        self::assertEquals($config['domains']['server1']['driver'], $loadedConfig['server1']['driver']);
     }
 
     /**

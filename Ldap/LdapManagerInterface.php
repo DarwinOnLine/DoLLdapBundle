@@ -10,14 +10,16 @@ use Symfony\Component\Security\Core\User\UserInterface;
  *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 interface LdapManagerInterface
 {
     /**
      * Find a user by its username.
      *
-     * @param  string $username
+     * @param string $username
+     *
      * @return \Symfony\Component\Security\Core\User\UserInterface|null The user or null if the user does not exist
      */
     public function findUserByUsername($username);
@@ -25,17 +27,19 @@ interface LdapManagerInterface
     /**
      * Finds one user by the given criteria.
      *
-     * @param  array  $criteria
+     * @param array $criteria
+     *
      * @return \Symfony\Component\Security\Core\User\UserInterface
      */
     public function findUserBy(array $criteria);
 
     /**
-     * Bind the user on ldap
+     * Bind the user on ldap.
      *
-     * @param  UserInterface $user
-     * @param  string        $password
-     * @return Boolean
+     * @param UserInterface $user
+     * @param string        $password
+     *
+     * @return bool
      */
-    function bind(UserInterface $user, $password);
+    public function bind(UserInterface $user, $password);
 }

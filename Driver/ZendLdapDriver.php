@@ -14,34 +14,36 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * them to the logger.
  *
  * @since v2.0.0
+ *
  * @author DarwinOnLine
  * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ *
+ * @see https://github.com/DarwinOnLine/DoLLdapBundle
  */
 class ZendLdapDriver implements LdapDriverInterface
 {
     /**
-     * @var Ldap $driver
+     * @var Ldap
      */
     private $driver;
 
     /**
-     * @var LoggerInterface $logger
+     * @var LoggerInterface
      */
     private $logger;
 
     /**
      * @param Ldap            $driver Initialized Zend::Ldap Object
-     * @param LoggerInterface $logger Optional logger for write debug messages.
+     * @param LoggerInterface $logger optional logger for write debug messages
      */
     public function __construct(Ldap $driver, LoggerInterface $logger = null)
     {
         $this->driver = $driver;
         $this->logger = $logger;
     }
-    
+
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function init(array $options)
     {
@@ -49,7 +51,7 @@ class ZendLdapDriver implements LdapDriverInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function search($baseDn, $filter, array $attributes = array())
     {
@@ -75,7 +77,7 @@ class ZendLdapDriver implements LdapDriverInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function bind(UserInterface $user, $password)
     {
@@ -92,7 +94,7 @@ class ZendLdapDriver implements LdapDriverInterface
             ]);
             $bind = $this->driver->bind($bind_rdn, $password);
 
-            return ($bind instanceof Ldap);
+            return $bind instanceof Ldap;
         } catch (ZendLdapException $exception) {
             $this->zendExceptionHandler($exception);
         }
@@ -101,8 +103,8 @@ class ZendLdapDriver implements LdapDriverInterface
     }
 
     /**
-     * Treat a Zend Ldap Exception
-     * 
+     * Treat a Zend Ldap Exception.
+     *
      * @param ZendLdapException $exception
      */
     protected function zendExceptionHandler(ZendLdapException $exception)
@@ -124,9 +126,9 @@ class ZendLdapDriver implements LdapDriverInterface
 
     /**
      * Log debug messages if the logger is set.
-     * 
+     *
      * @param string $message
-     * @param array $context
+     * @param array  $context
      */
     private function logDebug($message, array $context = [])
     {
