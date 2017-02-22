@@ -19,6 +19,7 @@ class LegacyHydratorTest extends AbstractHydratorTestCase
             ->will($this->returnValue(new TestUser()));
 
         $this->hydrator = new LegacyHydrator($userManager);
-        $this->hydrator->setAttributeMap($this->getDefaultUserConfig());
+        $config = $this->getDefaultUserConfig();
+        $this->hydrator->setAttributeMap($config['attributes']);
     }
 }
