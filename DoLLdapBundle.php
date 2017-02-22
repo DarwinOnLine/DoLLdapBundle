@@ -2,7 +2,9 @@
 
 namespace DoL\LdapBundle;
 
-use DoL\LdapBundle\Security\Factory\LdapFactory;
+use DoL\LdapBundle\Security\Factory\FormLoginLdapFactory;
+use DoL\LdapBundle\Security\Factory\HttpBasicLdapFactory;
+use Symfony\Bundle\SecurityBundle\DependencyInjection\SecurityExtension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
@@ -26,7 +28,9 @@ class DoLLdapBundle extends Bundle
     {
         parent::build($container);
 
+        /** @var SecurityExtension $extension */
         $extension = $container->getExtension('security');
-        $extension->addSecurityListenerFactory(new LdapFactory());
+        $extension->addSecurityListenerFactory(new FormLoginLdapFactory());
+        $extension->addSecurityListenerFactory(new HttpBasicLdapFactory());
     }
 }

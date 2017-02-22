@@ -1,13 +1,15 @@
 parameters:
-  dol_ldap.domains.parameters: []
+  # First init : no parameters
+  dol_ldap.ldap_driver.parameters: []
+  dol_ldap.ldap_driver.protocol.version: 3
   zend.ldap_driver.class: Zend\Ldap\Ldap
-  dol_ldap.ldap_driver.multiple.class: DoL\LdapBundle\Driver\MultipleLdapDriver
   dol_ldap.ldap_driver.zend.class: DoL\LdapBundle\Driver\ZendLdapDriver
 
 services:
   # Zend Ldap driver
   dol_ldap.ldap_driver.zend.driver:
     class: "%zend.ldap_driver.class%"
+    arguments: [ "%dol_ldap.ldap_driver.parameters%" ]
     public: false
 
   # DoL Zend Ldap driver

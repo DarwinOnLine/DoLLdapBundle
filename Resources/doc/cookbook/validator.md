@@ -1,22 +1,22 @@
 Prevent registrations with usernames that already exists on LDAP
 ================================================================
 
-Since that DoLLdapBundle can be used together with third party other user
-managers like FOSUserBundle, could be possible that an user register himself
-with an username that already exists on LDAP.
+Since DoLLdapBundle can be used together with third party user
+managers like FOSUserBundle, it could be possible that a user registers himself
+with a username that already exists on LDAP.
 
-To prevent this behavior, DoLLdapBundle is shipped with a validator for assure
-the uniqueness on the username field. This validator need be enabled with one
+To prevent this behavior, DoLLdapBundle is shipped with a validator for ensuring
+the uniqueness on the username field. This validator needs to be enabled with one
 easy step in your bundle.
 
 ### Enable Unique constraint for Username attribute
 
 **Using validation.xml**
 
-If you prefer XML format put this code on validation.xml and set the class name
+If you prefer XML format put this code in validation.xml and set the class name
 to the correct one.
 
-```` xml
+``` xml
 <!-- src/Acme/BlogBundle/Resources/config/validation.xml -->
 <?xml version="1.0" ?>
 <constraint-mapping xmlns="http://symfony.com/schema/dic/constraint-mapping"
@@ -37,4 +37,4 @@ to the correct one.
 </constraint-mapping>
 ```
 
-NOTE: At the moment of write this recipe, the validator only can check uniqueness with the username attribute
+NOTE: At the moment of writing this recipe, the validator only can check uniqueness with the username attribute

@@ -61,6 +61,7 @@ class Configuration implements ConfigurationInterface
                                 ->children()
                                     ->scalarNode('baseDn')->isRequired()->cannotBeEmpty()->end()
                                     ->scalarNode('filter')->defaultValue('')->end()
+                                    ->scalarNode('usernameAttribute')->defaultValue('uid')->end()
                                     ->arrayNode('attributes')
                                         ->defaultValue(array(
                                             array(
@@ -77,6 +78,11 @@ class Configuration implements ConfigurationInterface
                                 ->end()
                             ->end()
                         ->end()
+                    ->validate()
+                        ->ifTrue(function ($v) {
+                            return $v['driver']['useSsl'] && $v['driver']['useStartTls'];
+                        })
+                        ->thenInvalid('The useSsl and useStartTls options are mutually exclusive.')
                     ->end()
                 ->end()
             ->end();
@@ -94,7 +100,7 @@ class Configuration implements ConfigurationInterface
                         ->arrayNode('service')
                             ->addDefaultsIfNotSet()
                             ->children()
-                                ->scalarNode('user_manager')->defaultValue('fos_user.user_manager')->end()
+                                ->scalarNode('user_hydrator')->defaultValue('dol_ldap.user_hydrator.default')->end()
                                 ->scalarNode('ldap_manager')->defaultValue('dol_ldap.ldap_manager.default')->end()
                                 ->scalarNode('ldap_driver')->defaultValue('dol_ldap.ldap_driver.zend')->end()
                             ->end()

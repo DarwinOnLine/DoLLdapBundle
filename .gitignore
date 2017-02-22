@@ -1,22 +1,6 @@
-# Bootstrap
-app/bootstrap*
+clover.xml
+composer.lock
+coveralls-upload.json
+phpunit.xml
 
-# Symfony directories
 vendor/*
-*/logs/*
-*/cache/*
-web/uploads/*
-web/bundles/*
-
-# Configuration files
-app/config/parameters.ini
-app/config/parameters.yml
-
-# Dev
-/.settings/
-/.buildpath
-/.project
-/composer.phar
-/composer.lock
-/nbproject/private/
-/nbproject/

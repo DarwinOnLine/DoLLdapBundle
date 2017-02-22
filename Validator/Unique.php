@@ -14,7 +14,10 @@ namespace DoL\LdapBundle\Validator;
 use Symfony\Component\Validator\Constraint;
 
 /**
+ * Constraint for the Unique validator.
+ *
  * @Annotation
+ * @Target({"CLASS", "ANNOTATION"})
  *
  * @author DarwinOnLine
  * @author Maks3w
@@ -22,18 +25,7 @@ use Symfony\Component\Validator\Constraint;
  */
 class Unique extends Constraint
 {
-    public $message = 'The value for "%property%" already exists.';
-    public $property;
-
-    public function getDefaultOption()
-    {
-        return 'property';
-    }
-
-    public function getRequiredOptions()
-    {
-        return array('property');
-    }
+    public $message = 'User already exists.';
 
     public function validatedBy()
     {
@@ -41,7 +33,7 @@ class Unique extends Constraint
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function getTargets()
     {

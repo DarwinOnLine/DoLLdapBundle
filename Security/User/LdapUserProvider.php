@@ -3,22 +3,22 @@
 namespace DoL\LdapBundle\Security\User;
 
 use DoL\LdapBundle\Ldap\LdapManagerInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
-use Symfony\Component\HttpKernel\Log\LoggerInterface;
+use Symfony\Component\Security\Core\Exception\UsernameNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 /**
- * Provides users from Ldap
- *
- * @author DarwinOnLine
- * @author Maks3w
- * @link https://github.com/DarwinOnLine/DoLLdapBundle
+ * Provides users from Ldap.
  */
 class LdapUserProvider implements UserProviderInterface
 {
+    /** @var LdapManagerInterface */
     protected $ldapManager;
+
+    /** @var null|LoggerInterface */
+    protected $logger;
 
     public function __construct(LdapManagerInterface $ldapManager, LoggerInterface $logger = null)
     {
@@ -27,24 +27,35 @@ class LdapUserProvider implements UserProviderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function loadUserByUsername($username)
     {
         $user = $this->ldapManager->findUserByUsername($username);
 
         if (empty($user)) {
-            $this->logInfo("User $username not found on ldap");
-            throw new UsernameNotFoundException(sprintf('User "%s" not found', $username));
-        } else {
-            $this->logInfo("User $username found on ldap");
+            $this->logInfo('User {username} {result} on LDAP', [
+                'action' => 'loadUserByUsername',
+                'username' => $username,
+                'result' => 'not found',
+            ]);
+            $ex = new UsernameNotFoundException(sprintf('User "%s" not found', $username));
+            $ex->setUsername($username);
+
+            throw $ex;
         }
+
+        $this->logInfo('User {username} {result} on LDAP', [
+            'action' => 'loadUserByUsername',
+            'username' => $username,
+            'result' => 'found',
+        ]);
 
         return $user;
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function refreshUser(UserInterface $user)
     {
@@ -56,7 +67,7 @@ class LdapUserProvider implements UserProviderInterface
     }
 
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function supportsClass($class)
     {
@@ -64,16 +75,17 @@ class LdapUserProvider implements UserProviderInterface
     }
 
     /**
-     * Log a message into the logger if this exists
+     * Log a message into the logger if this exists.
      *
      * @param string $message
+     * @param array $context
      */
-    private function logInfo($message)
+    private function logInfo($message, array $context = [])
     {
         if (!$this->logger) {
             return;
         }
 
-        $this->logger->info($message);
+        $this->logger->info($message, $context);
     }
 }

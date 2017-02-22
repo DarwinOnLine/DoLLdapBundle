@@ -9,23 +9,23 @@ use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
- * Ldap security factory
+ * Form login factory for Ldap.
  *
  * @author DarwinOnLine
  * @author Maks3w
  * @link https://github.com/DarwinOnLine/DoLLdapBundle
  */
-class LdapFactory implements SecurityFactoryInterface
+class FormLoginLdapFactory implements SecurityFactoryInterface
 {
     public function create(ContainerBuilder $container, $id, $config, $userProviderId, $defaultEntryPointId)
     {
         // authentication provider
-        $authProviderId = $this->createAuthProvider($container, $id, $config, $userProviderId);
+        $authProviderId = $this->createAuthProvider($container, $id, $userProviderId);
 
         // authentication listener
-        $listenerId = $this->createListener($container, $id, $config, $userProviderId);
+        $listenerId = $this->createListener($container, $id, $config);
 
-        return array($authProviderId, $listenerId, $defaultEntryPointId);
+        return [$authProviderId, $listenerId, $defaultEntryPointId];
     }
 
     public function getPosition()
@@ -43,7 +43,7 @@ class LdapFactory implements SecurityFactoryInterface
         // Without Configuration
     }
 
-    protected function createAuthProvider(ContainerBuilder $container, $id, $config, $userProviderId)
+    protected function createAuthProvider(ContainerBuilder $container, $id, $userProviderId)
     {
         $provider = 'dol_ldap.security.authentication.provider';
         $providerId = $provider . '.' . $id;
@@ -57,11 +57,11 @@ class LdapFactory implements SecurityFactoryInterface
         return $providerId;
     }
 
-    protected function createListener(ContainerBuilder $container, $id, $config, $userProvider)
+    protected function createListener(ContainerBuilder $container, $id, $config)
     {
         $listenerId = 'security.authentication.listener.form';
 
-        $listener   = new DefinitionDecorator($listenerId);
+        $listener = new DefinitionDecorator($listenerId);
         $listener->replaceArgument(4, $id);
         $listener->replaceArgument(5, $config);
 

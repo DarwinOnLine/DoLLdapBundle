@@ -11,11 +11,11 @@
 
 namespace DoL\LdapBundle\Validator;
 
+use DoL\LdapBundle\Ldap\LdapManagerInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraint;
 use Symfony\Component\Validator\ConstraintValidator;
 use Symfony\Component\Validator\Exception\UnexpectedTypeException;
-use Symfony\Component\Security\Core\User\UserInterface;
-use DoL\LdapBundle\Ldap\LdapManagerInterface;
 
 /**
  * UniqueValidator
@@ -32,7 +32,7 @@ class UniqueValidator extends ConstraintValidator
     protected $ldapManager;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param LdapManagerInterface $ldapManager
      */
@@ -48,9 +48,14 @@ class UniqueValidator extends ConstraintValidator
      * @param Constraint    $constraint The constraint for the validation
      *
      * @throws UnexpectedTypeException if $value is not instance of \Symfony\Component\Security\Core\User\UserInterface
+     * @throws UnexpectedTypeException if $constraint is not instance of \DoL\LdapBundle\Validator\Unique
      */
     public function validate($value, Constraint $constraint)
     {
+        if (!$constraint instanceof Unique) {
+            throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Unique');
+        }
+
         if (!$value instanceof UserInterface) {
             throw new UnexpectedTypeException($value, 'Symfony\Component\Security\Core\User\UserInterface');
         }
@@ -58,9 +63,7 @@ class UniqueValidator extends ConstraintValidator
         $user = $this->ldapManager->findUserByUsername($value->getUsername());
 
         if ($user) {
-            $this->context->addViolation($constraint->message, array(
-                '%property%' => $constraint->property
-            ));
+            $this->context->addViolation($constraint->message);
         }
     }
 }

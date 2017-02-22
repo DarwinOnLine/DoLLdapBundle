@@ -31,7 +31,7 @@ class DoLLdapExtension extends Extension
             $loader->load(sprintf('%s.yml', $basename));
         }
 
-        $container->setAlias('dol_ldap.user_manager', $config['service']['user_manager']);
+        $container->setAlias('dol_ldap.user_hydrator', $config['service']['user_hydrator']);
         $container->setAlias('dol_ldap.ldap_manager', $config['service']['ldap_manager']);
         $container->setAlias('dol_ldap.ldap_driver', $config['service']['ldap_driver']);
 

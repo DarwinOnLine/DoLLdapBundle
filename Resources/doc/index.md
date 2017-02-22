@@ -22,7 +22,7 @@ Add this bundle to your `vendor/` dir:
 ```json
 {
     "require": {
-        "dol/ldap-bundle": "^1.0"
+        "dol/ldap-bundle": "^2.0"
     }
 }
 ```
@@ -47,13 +47,17 @@ public function registerBundles()
 # app/config/security.yml
 
 security:
+  # Preserve plain text password in token for refresh the user.
+  # Analyze the security considerations before turn off this setting.
+  erase_credentials: false
+  
   firewalls:
     main:
       pattern:    ^/
-      dol_ldap:  ~
+      dol_ldap:   ~
       form_login:
-          always_use_default_target_path: true
-          default_target_path: /profile
+        always_use_default_target_path: true
+        default_target_path: /profile
       logout:     true
       anonymous:  true
 
@@ -65,6 +69,17 @@ security:
       AcmeBundle\Acme\User\LdapUser: plaintext
 ```
 
+**Optional you can also enable basic authentication**
+```yaml
+# app/config/security.yml
+
+security:
+  firewalls:
+    api:
+      pattern:            ^/api
+      dol_ldap_httpbasic: ~
+```
+
 ### 4. Configure config.yml
 ``` yaml
 # app/config/config.yml
@@ -74,50 +89,58 @@ dol_ldap:
         server1:
             driver:
                 host:                your.first.host.foo
-                    port:                389    # Optional
-            #       username:            foo    # Optional
-            #       password:            bar    # Optional
-            #       bindRequiresDn:      true   # Optional
-            #       baseDn:              ou=users, dc=host, dc=foo   # Optional
-            #       accountFilterFormat: (&(uid=%s)) # Optional. sprintf format %s will be the username
-            #       optReferrals:        false  # Optional
-            #       useSsl:              true   # Enable SSL negotiation. Optional
-            #       useStartTls:         true   # Enable TLS negotiation. Optional
+#               port:                389    # Optional
+#               username:            foo    # Optional
+#               password:            bar    # Optional
+#               bindRequiresDn:      true   # Optional
+#               baseDn:              ou=users, dc=host, dc=foo   # Optional
+#               accountFilterFormat: (&(uid=%s)) # Optional. sprintf format %s will be the username
+#               optReferrals:        false  # Optional
+#               useSsl:              true   # Enable SSL negotiation. Optional
+#               useStartTls:         true   # Enable TLS negotiation. Optional
+#               accountCanonicalForm: 3 # ACCTNAME_FORM_BACKSLASH this is only needed if your users have to login with something like HOST\User
+#               accountDomainName: HOST
+#               accountDomainNameShort: HOST # if you use the Backslash form set both to Hostname than the Username will be converted to HOST\User
             user:
                 baseDn: ou=users, dc=host, dc=foo
                 filter: (&(ObjectClass=Person))
+#               usernameAttribute: uid # Optional
                 # Specify ldap attributes mapping [ldap attribute, user object method]
                 attributes:
-                #   - { ldap_attr: uid,  user_method: setUsername } # Default
-                #   - { ldap_attr: cn,   user_method: setName }     # Optional
-                #   - { ldap_attr: ...,  user_method: ... }         # Optional
+#                   - { ldap_attr: uid,  user_method: setUsername } # Default
+#                   - { ldap_attr: cn,   user_method: setName }     # Optional
+#                   - { ldap_attr: ...,  user_method: ... }         # Optional
         # Second domain
         server2:
             driver:
                 host:                your.second.host.foo
-                    port:                389    # Optional
-            #       username:            foo    # Optional
-            #       password:            bar    # Optional
-            #       bindRequiresDn:      true   # Optional
-            #       baseDn:              ou=users, dc=host, dc=foo   # Optional
-            #       accountFilterFormat: (&(uid=%s)) # Optional. sprintf format %s will be the username
-            #       optReferrals:        false  # Optional
-            #       useSsl:              true   # Enable SSL negotiation. Optional
-            #       useStartTls:         true   # Enable TLS negotiation. Optional
+#               port:                389    # Optional
+#               username:            foo    # Optional
+#               password:            bar    # Optional
+#               bindRequiresDn:      true   # Optional
+#               baseDn:              ou=users, dc=host, dc=foo   # Optional
+#               accountFilterFormat: (&(uid=%s)) # Optional. sprintf format %s will be the username
+#               optReferrals:        false  # Optional
+#               useSsl:              true   # Enable SSL negotiation. Optional
+#               useStartTls:         true   # Enable TLS negotiation. Optional
+#               accountCanonicalForm: 3 # ACCTNAME_FORM_BACKSLASH this is only needed if your users have to login with something like HOST\User
+#               accountDomainName: HOST
+#               accountDomainNameShort: HOST # if you use the Backslash form set both to Hostname than the Username will be converted to HOST\User
             user:
                 baseDn: ou=users, dc=host, dc=foo
                 filter: (&(ObjectClass=Person))
+#               usernameAttribute: uid # Optional
                 # Specify ldap attributes mapping [ldap attribute, user object method]
                 attributes:
-                #   - { ldap_attr: uid,  user_method: setUsername } # Default
-                #   - { ldap_attr: cn,   user_method: setName }     # Optional
-                #   - { ldap_attr: ...,  user_method: ... }         # Optional
+#                   - { ldap_attr: uid,  user_method: setUsername } # Default
+#                   - { ldap_attr: cn,   user_method: setName }     # Optional
+#                   - { ldap_attr: ...,  user_method: ... }         # Optional
         # N domain
 #       serverN:
 #       ...
 #   service:
-#       user_manager: fos_user.user_manager          # Overrides default user manager
-#       ldap_manager: fr3d_ldap.ldap_manager.default # Overrides default ldap manager
+#       user_hydrator: dol_ldap.user_hydrator.default   # Overrides default user hydrator
+#       ldap_manager: dol_ldap.ldap_manager.default     # Overrides default ldap manager
 ```
 
 **You need to configure the parameters under the dol_ldap section.**
@@ -147,6 +170,6 @@ security:
 
 Look the cookbook for another interesting things.
 
-- [Override Ldap Manager](cookbook/override_ldap-manager.md)
+- [Create a custom hydrator](cookbook/custom_hydrator.md)
 - [Prevent guess registration with a username that already exists on LDAP](cookbook/validator.md)
-- [Example configuration with an open LDAP (testathon)](cookbook/testathon.md)
+- [Example configuration for Active Directory](cookbook/active-directory.md)
