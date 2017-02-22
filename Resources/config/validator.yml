@@ -4,7 +4,7 @@ parameters:
 services:
   # Unique validator service
   dol_ldap.validator.unique:
-    class: '%dol_ldap.validator.unique.class%'
-    arguments: [ '@dol_ldap.ldap_manager' ]
+    class: "%dol_ldap.validator.unique.class%"
+    arguments: [ "@dol_ldap.ldap_manager" ]
     tags:
-      - { name: validator.constraint_validator, alias:"dol_ldap.validator.unique" }
+      - { name: "validator.constraint_validator", alias: "dol_ldap.validator.unique" }

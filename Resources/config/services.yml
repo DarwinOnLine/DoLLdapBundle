@@ -5,10 +5,10 @@ parameters:
 services:
   # Ldap manager
   dol_ldap.ldap_manager.default:
-    class: '%dol_ldap.ldap_manager.class%'
-    arguments: [ '@dol_ldap.ldap_driver', '@dol_ldap.user_hydrator', '%dol_ldap.domains.parameters%' ]
+    class: "%dol_ldap.ldap_manager.class%"
+    arguments: [ "@dol_ldap.ldap_driver", "@dol_ldap.user_hydrator", "%dol_ldap.domains.parameters%" ]
 
   # Ldap hydrator
   dol_ldap.user_hydrator.default:
-    class: '%dol_ldap.ldap_hydrator.class%'
-    arguments: [ '@fos_user.user_manager' ]
+    class: "%dol_ldap.ldap_hydrator.class%"
+    arguments: [ "@fos_user.user_manager" ]

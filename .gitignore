@@ -2,5 +2,6 @@ clover.xml
 composer.lock
 coveralls-upload.json
 phpunit.xml
-
-vendor/*
+/vendor/
+/.idea/
+/.php_cs.cache
