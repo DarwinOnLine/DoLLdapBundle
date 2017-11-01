@@ -37,7 +37,7 @@ trait HydrateWithMapTrait
                 unset($ldapValue['count']);
             }
 
-            if (count($ldapValue) === 1) {
+            if (1 === count($ldapValue)) {
                 $value = array_shift($ldapValue);
             } else {
                 $value = $ldapValue;

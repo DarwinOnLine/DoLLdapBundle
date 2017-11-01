@@ -94,7 +94,7 @@ class LdapManager implements LdapManagerInterface
                 throw new \Exception('This search can only return a single user');
             }
 
-            if ($entries['count'] == 0) {
+            if (0 == $entries['count']) {
                 return null;
             }
             $user = $this->hydrator->hydrate($entries[0]);

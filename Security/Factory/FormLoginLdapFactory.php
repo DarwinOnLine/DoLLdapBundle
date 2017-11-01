@@ -4,8 +4,8 @@ namespace DoL\LdapBundle\Security\Factory;
 
 use Symfony\Bundle\SecurityBundle\DependencyInjection\Security\Factory\SecurityFactoryInterface;
 use Symfony\Component\Config\Definition\Builder\NodeDefinition;
+use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\DefinitionDecorator;
 use Symfony\Component\DependencyInjection\Reference;
 
 /**
@@ -50,7 +50,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
         $providerId = $provider.'.'.$id;
 
         $container
-            ->setDefinition($providerId, new DefinitionDecorator($provider))
+            ->setDefinition($providerId, new ChildDefinition($provider))
             ->replaceArgument(1, $id) // Provider Key
             ->replaceArgument(2, new Reference($userProviderId)) // User Provider
         ;
@@ -62,7 +62,7 @@ class FormLoginLdapFactory implements SecurityFactoryInterface
     {
         $listenerId = 'security.authentication.listener.form';
 
-        $listener = new DefinitionDecorator($listenerId);
+        $listener = new ChildDefinition($listenerId);
         $listener->replaceArgument(4, $id);
         $listener->replaceArgument(5, $config);
 
