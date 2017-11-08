@@ -1,7 +1,7 @@
 DoLLdapBundle
 =============
 
-[![Latest Stable Version](https://poser.pugx.org/dol/ldap-bundle/v/stable.png)](https://packagist.org/packages/dol/ldap-bundle) [![Total Downloads](https://poser.pugx.org/dol/ldap-bundle/downloads.png)](https://packagist.org/packages/dol/ldap-bundle) [![License](https://poser.pugx.org/dol/ldap-bundle/license.png)](https://packagist.org/packages/dol/ldap-bundle)
+[![Latest Stable Version](https://poser.pugx.org/dol/ldap-bundle/v/stable.png)](https://packagist.org/packages/dol/ldap-bundle) [![Total Downloads](https://poser.pugx.org/dol/ldap-bundle/downloads.png)](https://packagist.org/packages/dol/ldap-bundle) [![License](https://poser.pugx.org/dol/ldap-bundle/license.png)](https://packagist.org/packages/dol/ldap-bundle) [![Build Status](https://scrutinizer-ci.com/g/DarwinOnLine/DoLLdapBundle/badges/build.png?b=master)](https://scrutinizer-ci.com/g/DarwinOnLine/DoLLdapBundle/build-status/master) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/DarwinOnLine/DoLLdapBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/DarwinOnLine/DoLLdapBundle/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/DarwinOnLine/DoLLdapBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/DarwinOnLine/DoLLdapBundle/?branch=master)
 
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/d09112c2-7c6c-4c67-9062-79d2efeca78b/big.png)](https://insight.sensiolabs.com/projects/d09112c2-7c6c-4c67-9062-79d2efeca78b)
 
