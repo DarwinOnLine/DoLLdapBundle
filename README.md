@@ -27,13 +27,6 @@ Installation
 
 All the installation instructions are located in [documentation](Resources/doc/index.md).
 
-License
--------
-
-This bundle is under the MIT license. See the complete license in the bundle:
-
-    Resources/meta/LICENSE
-
 Reporting an issue or a feature request
 ---------------------------------------
 
@@ -44,5 +37,11 @@ built using the [Symfony Standard Edition](https://github.com/symfony/symfony-st
 to allow developers of the bundle to reproduce the issue by simply cloning it
 and following some steps.
 
+License
+-------
+
+This bundle is under the MIT license. See the complete license in the bundle:
+
+    Resources/meta/LICENSE
 
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FDarwinOnLine%2FDoLLdapBundle.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FDarwinOnLine%2FDoLLdapBundle?ref=badge_large)
