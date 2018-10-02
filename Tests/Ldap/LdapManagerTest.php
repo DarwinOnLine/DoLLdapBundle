@@ -4,6 +4,7 @@ namespace DoL\LdapBundle\Tests\Ldap;
 
 use DoL\LdapBundle\Hydrator\HydratorInterface;
 use DoL\LdapBundle\Ldap\LdapManager;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
@@ -23,6 +24,11 @@ class LdapManagerTest extends \PHPUnit_Framework_TestCase
      * @var HydratorInterface|\PHPUnit_Framework_MockObject_MockObject
      */
     protected $hydrator;
+
+    /**
+     * @var EventDispatcherInterface|\PHPUnit_Framework_MockObject_MockObject
+     */
+    protected $eventDispatcher;
 
     /**
      * @var LdapManager
@@ -57,7 +63,9 @@ class LdapManagerTest extends \PHPUnit_Framework_TestCase
 
         $this->hydrator = $this->getMock('DoL\LdapBundle\Hydrator\HydratorInterface');
 
-        $this->ldapManager = new LdapManager($this->driver, $this->hydrator, $this->paramSets);
+        $this->eventDispatcher = $this->getMock(EventDispatcherInterface::class);
+
+        $this->ldapManager = new LdapManager($this->driver, $this->hydrator, $this->eventDispatcher, $this->paramSets);
     }
 
     /**

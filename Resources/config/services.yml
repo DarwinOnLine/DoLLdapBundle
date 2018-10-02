@@ -6,7 +6,7 @@ services:
   # Ldap manager
   dol_ldap.ldap_manager.default:
     class: "%dol_ldap.ldap_manager.class%"
-    arguments: [ "@dol_ldap.ldap_driver", "@dol_ldap.user_hydrator", "%dol_ldap.domains.parameters%" ]
+    arguments: [ "@dol_ldap.ldap_driver", "@dol_ldap.user_hydrator", '@event_dispatcher', "%dol_ldap.domains.parameters%" ]
 
   # Ldap hydrator
   dol_ldap.user_hydrator.default:

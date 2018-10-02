@@ -3,6 +3,7 @@
 namespace DoL\LdapBundle\Ldap;
 
 use DoL\LdapBundle\Driver\LdapDriverInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use DoL\LdapBundle\Hydrator\HydratorInterface;
 
@@ -22,16 +23,21 @@ class LdapManager implements LdapManagerInterface
     protected $params = [];
     protected $ldapAttributes = [];
     protected $ldapUsernameAttr;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * @var HydratorInterface
      */
     protected $hydrator;
 
-    public function __construct(LdapDriverInterface $driver, HydratorInterface $hydrator, array $paramSets)
+    public function __construct(LdapDriverInterface $driver, HydratorInterface $hydrator, EventDispatcherInterface $eventDispatcher, array $paramSets)
     {
         $this->driver = $driver;
         $this->hydrator = $hydrator;
+        $this->eventDispatcher = $eventDispatcher;
         $this->paramSets = $paramSets;
     }
 
