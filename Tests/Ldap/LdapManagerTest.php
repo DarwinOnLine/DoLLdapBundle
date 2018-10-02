@@ -2,6 +2,7 @@
 
 namespace DoL\LdapBundle\Tests\Ldap;
 
+use DoL\LdapBundle\Event\SwitchParameterSetEvent;
 use DoL\LdapBundle\Hydrator\HydratorInterface;
 use DoL\LdapBundle\Ldap\LdapManager;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -150,6 +151,15 @@ class LdapManagerTest extends \PHPUnit_Framework_TestCase
             ->method('bind')
             ->with($user, $this->equalTo($password))
             ->will($this->returnValue(true));
+        $this->eventDispatcher->expects($this->once())
+            ->method('dispatch')
+            ->with(
+                $this->equalTo('dol_ldap.manager.switch_parameter_set'),
+                $this->callback(function(SwitchParameterSetEvent $event){
+                    $parameterSet = $event->getParameterSet();
+                    return (is_array($parameterSet) AND isset($parameterSet['driver']));
+                })
+            );
 
         self::assertTrue($this->ldapManager->bind($user, $password));
     }

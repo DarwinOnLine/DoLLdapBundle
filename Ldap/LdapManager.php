@@ -3,6 +3,7 @@
 namespace DoL\LdapBundle\Ldap;
 
 use DoL\LdapBundle\Driver\LdapDriverInterface;
+use DoL\LdapBundle\Event\SwitchParameterSetEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use DoL\LdapBundle\Hydrator\HydratorInterface;
@@ -167,5 +168,6 @@ class LdapManager implements LdapManagerInterface
             $this->params = [];
         }
         $this->setLdapAttr();
+        $this->eventDispatcher->dispatch(SwitchParameterSetEvent::PARAMETERSET, new SwitchParameterSetEvent($parameter));
     }
 }
