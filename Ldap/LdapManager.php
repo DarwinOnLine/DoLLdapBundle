@@ -53,7 +53,7 @@ class LdapManager implements LdapManagerInterface
                 $this->driver->init($paramSet['driver']);
 
                 if (false !== $this->driver->bind($user, $password)) {
-                    $this->switchParameterSet($paramSet['user']);
+                    $this->switchParameterSet($paramSet);
 
                     return true;
                 }
@@ -73,7 +73,7 @@ class LdapManager implements LdapManagerInterface
         } else {
             foreach ($this->paramSets as $paramSet) {
                 $this->driver->init($paramSet['driver']);
-                $this->switchParameterSet($paramSet['user']);
+                $this->switchParameterSet($paramSet);
 
                 $user = $this->findUserBy([$this->ldapUsernameAttr => $username]);
                 if (false !== $user && $user instanceof UserInterface) {
@@ -106,7 +106,7 @@ class LdapManager implements LdapManagerInterface
         } else {
             foreach ($this->paramSets as $paramSet) {
                 $this->driver->init($paramSet['driver']);
-                $this->switchParameterSet($paramSet['user']);
+                $this->switchParameterSet($paramSet);
 
                 $user = $this->findUserBy($criteria);
                 if (false !== $user && $user instanceof UserInterface) {
@@ -161,7 +161,11 @@ class LdapManager implements LdapManagerInterface
 
     private function switchParameterSet(array $parameter)
     {
-        $this->params = $parameter;
+        if (isset($parameter['user'])) {
+            $this->params = $parameter['user'];
+        } else {
+            $this->params = [];
+        }
         $this->setLdapAttr();
     }
 }
