@@ -47,8 +47,7 @@ class LdapManager implements LdapManagerInterface
                 $this->driver->init($paramSet['driver']);
 
                 if (false !== $this->driver->bind($user, $password)) {
-                    $this->params = $paramSet['user'];
-                    $this->setLdapAttr();
+                    $this->switchParameterSet($paramSet['user']);
 
                     return true;
                 }
@@ -68,16 +67,14 @@ class LdapManager implements LdapManagerInterface
         } else {
             foreach ($this->paramSets as $paramSet) {
                 $this->driver->init($paramSet['driver']);
-                $this->params = $paramSet['user'];
-                $this->setLdapAttr();
+                $this->switchParameterSet($paramSet['user']);
 
                 $user = $this->findUserBy([$this->ldapUsernameAttr => $username]);
                 if (false !== $user && $user instanceof UserInterface) {
                     return $user;
                 }
 
-                $this->params = [];
-                $this->setLdapAttr();
+                $this->switchParameterSet([]);
             }
         }
     }
@@ -103,16 +100,14 @@ class LdapManager implements LdapManagerInterface
         } else {
             foreach ($this->paramSets as $paramSet) {
                 $this->driver->init($paramSet['driver']);
-                $this->params = $paramSet['user'];
-                $this->setLdapAttr();
+                $this->switchParameterSet($paramSet['user']);
 
                 $user = $this->findUserBy($criteria);
                 if (false !== $user && $user instanceof UserInterface) {
                     return $user;
                 }
 
-                $this->params = [];
-                $this->setLdapAttr();
+                $this->switchParameterSet([]);
             }
         }
     }
@@ -156,5 +151,11 @@ class LdapManager implements LdapManagerInterface
         }
 
         return sprintf('(%s%s)', $condition, implode($filters));
+    }
+
+    private function switchParameterSet(array $parameter)
+    {
+        $this->params = $parameter;
+        $this->setLdapAttr();
     }
 }
