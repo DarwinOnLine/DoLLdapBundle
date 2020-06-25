@@ -3,6 +3,8 @@
 namespace DoL\LdapBundle\Ldap;
 
 use DoL\LdapBundle\Driver\LdapDriverInterface;
+use DoL\LdapBundle\Event\SwitchParameterSetEvent;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use DoL\LdapBundle\Hydrator\HydratorInterface;
 
@@ -22,16 +24,21 @@ class LdapManager implements LdapManagerInterface
     protected $params = [];
     protected $ldapAttributes = [];
     protected $ldapUsernameAttr;
+    /**
+     * @var EventDispatcherInterface
+     */
+    protected $eventDispatcher;
 
     /**
      * @var HydratorInterface
      */
     protected $hydrator;
 
-    public function __construct(LdapDriverInterface $driver, HydratorInterface $hydrator, array $paramSets)
+    public function __construct(LdapDriverInterface $driver, HydratorInterface $hydrator, EventDispatcherInterface $eventDispatcher, array $paramSets)
     {
         $this->driver = $driver;
         $this->hydrator = $hydrator;
+        $this->eventDispatcher = $eventDispatcher;
         $this->paramSets = $paramSets;
     }
 
@@ -47,8 +54,7 @@ class LdapManager implements LdapManagerInterface
                 $this->driver->init($paramSet['driver']);
 
                 if (false !== $this->driver->bind($user, $password)) {
-                    $this->params = $paramSet['user'];
-                    $this->setLdapAttr();
+                    $this->switchParameterSet($paramSet);
 
                     return true;
                 }
@@ -68,16 +74,14 @@ class LdapManager implements LdapManagerInterface
         } else {
             foreach ($this->paramSets as $paramSet) {
                 $this->driver->init($paramSet['driver']);
-                $this->params = $paramSet['user'];
-                $this->setLdapAttr();
+                $this->switchParameterSet($paramSet);
 
                 $user = $this->findUserBy([$this->ldapUsernameAttr => $username]);
                 if (false !== $user && $user instanceof UserInterface) {
                     return $user;
                 }
 
-                $this->params = [];
-                $this->setLdapAttr();
+                $this->switchParameterSet([]);
             }
         }
     }
@@ -103,16 +107,14 @@ class LdapManager implements LdapManagerInterface
         } else {
             foreach ($this->paramSets as $paramSet) {
                 $this->driver->init($paramSet['driver']);
-                $this->params = $paramSet['user'];
-                $this->setLdapAttr();
+                $this->switchParameterSet($paramSet);
 
                 $user = $this->findUserBy($criteria);
                 if (false !== $user && $user instanceof UserInterface) {
                     return $user;
                 }
 
-                $this->params = [];
-                $this->setLdapAttr();
+                $this->switchParameterSet([]);
             }
         }
     }
@@ -156,5 +158,16 @@ class LdapManager implements LdapManagerInterface
         }
 
         return sprintf('(%s%s)', $condition, implode($filters));
+    }
+
+    private function switchParameterSet(array $parameter)
+    {
+        if (isset($parameter['user'])) {
+            $this->params = $parameter['user'];
+        } else {
+            $this->params = [];
+        }
+        $this->setLdapAttr();
+        $this->eventDispatcher->dispatch(SwitchParameterSetEvent::PARAMETERSET, new SwitchParameterSetEvent($parameter));
     }
 }
